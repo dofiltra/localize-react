@@ -1,10 +1,10 @@
 {
   "name": "@dofiltra/localize-react",
-  "version": "1.7.9",
+  "version": "1.7.10",
   "description": "React Localization Library",
   "main": "dist/localize-react.js",
-  "repository": "git@github.com:yankouskia/localize-react.git",
-  "author": "yankouskia <aleksandr.yankovskiy@gmail.com>",
+  "repository": "git@github.com:dofiltra/localize-react.git",
+  "author": "dofiltra",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8.0"
@@ -27,6 +27,9 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-uglify": "^6.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "rollup -c",
