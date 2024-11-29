@@ -1,6 +1,6 @@
 {
   "name": "@dofiltra/localize-react",
-  "version": "1.7.12",
+  "version": "1.7.13",
   "description": "React Localization Library",
   "main": "dist/localize-react.js",
   "repository": "git@github.com:dofiltra/localize-react.git",
