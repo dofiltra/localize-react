@@ -28,7 +28,7 @@ export function LocalizationProvider({
 
     const fallbackTranslation =
       typeof defaultMessage === "string"
-        ? defaultMessage || key?.split?.(":")?.[1] || key
+        ? defaultMessage || key?.toString().split?.(":")?.[1] || key
         : key;
     const possibleValue = pureTranslations[key];
 
