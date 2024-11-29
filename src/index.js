@@ -2,7 +2,7 @@ export {
   LocalizationConsumer,
   LocalizationContext,
   LocalizationProvider,
-} from './Provider';
+} from "./Provider";
 
-export { useLocalize } from './use-localize';
-export { Message } from './Message';
+export { useLocalize } from "./use-localize";
+export { Message } from "./Message";

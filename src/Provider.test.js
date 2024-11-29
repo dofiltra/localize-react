@@ -1,92 +1,81 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import React from "react";
+import renderer from "react-test-renderer";
 import {
   LocalizationConsumer,
   LocalizationContext,
   LocalizationProvider,
-} from './Provider';
+} from "./Provider";
 
 const TRANSLATIONS = {
   en: {
-    name: 'Alex',
-    emptyMessage: '',
+    name: "Alex",
+    emptyMessage: "",
     n: {
       i: {
         c: {
-          k: 'yankouskia',
-        }
-      }
-    }
+          k: "yankouskia",
+        },
+      },
+    },
   },
   fr: {
-    github: 'https://github.com/yankouskia',
-    templateHello: 'Hello {{name}}',
+    github: "https://github.com/yankouskia",
+    templateHello: "Hello {{name}}",
   },
 };
 
-describe('Provider', () => {
-  describe('LocalizationProvider', () => {
-    it('renders children', () => {
+describe("Provider", () => {
+  describe("LocalizationProvider", () => {
+    it("renders children", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="fr"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="fr" translations={TRANSLATIONS}>
             children as a text
           </LocalizationProvider>
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('LocalizationConsumer', () => {
-    it('provides translation for set locale', () => {
+  describe("LocalizationConsumer", () => {
+    it("provides translation for set locale", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="en"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="en" translations={TRANSLATIONS}>
             <LocalizationConsumer>
-              {({ translate }) => translate('name')}
+              {({ translate }) => translate("name")}
             </LocalizationConsumer>
           </LocalizationProvider>
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides empty object translations by default', () => {
+    it("provides empty object translations by default", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="fr"
-          >
+          <LocalizationProvider locale="fr">
             <LocalizationConsumer>
-              {({ translate }) => translate('any key')}
+              {({ translate }) => translate("any key")}
             </LocalizationConsumer>
           </LocalizationProvider>
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides translation for empty message', () => {
+    it("provides translation for empty message", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="en"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="en" translations={TRANSLATIONS}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('emptyMessage')}</span>
+                  <span>{translate("emptyMessage")}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -94,20 +83,17 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides translation the same as key for unexisting key', () => {
+    it("provides translation the same as key for unexisting key", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="en"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="en" translations={TRANSLATIONS}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('unexistingKey')}</span>
+                  <span>{translate("unexistingKey")}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -115,20 +101,17 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides translation for empty key as the same key', () => {
+    it("provides translation for empty key as the same key", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="en"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="en" translations={TRANSLATIONS}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('')}</span>
+                  <span>{translate("")}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -136,20 +119,17 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides translation for not found key with values', () => {
+    it("provides translation for not found key with values", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="en"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="en" translations={TRANSLATIONS}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('Hello, {{name}}', { name: 'Alex' })}</span>
+                  <span>{translate("Hello, {{name}}", { name: "Alex" })}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -157,20 +137,17 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides translation for key with values', () => {
+    it("provides translation for key with values", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="fr"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="fr" translations={TRANSLATIONS}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('templateHello', { name: 'Alex' })}</span>
+                  <span>{translate("templateHello", { name: "Alex" })}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -178,20 +155,17 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides translation with nested key', () => {
+    it("provides translation with nested key", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="en"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="en" translations={TRANSLATIONS}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('n.i.c.k')}</span>
+                  <span>{translate("n.i.c.k")}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -199,20 +173,17 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides key translation if nested key was not found', () => {
+    it("provides key translation if nested key was not found", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="en"
-            translations={TRANSLATIONS}
-          >
+          <LocalizationProvider locale="en" translations={TRANSLATIONS}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('n.i.c.k.not.found')}</span>
+                  <span>{translate("n.i.c.k.not.found")}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -220,19 +191,17 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('provides nested key translation without locale', () => {
+    it("provides nested key translation without locale", () => {
       const tree = renderer
         .create(
-          <LocalizationProvider
-            translations={{ a: { b: 'translation' } }}
-          >
+          <LocalizationProvider translations={{ a: { b: "translation" } }}>
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('a.b')}</span>
+                  <span>{translate("a.b")}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -240,80 +209,35 @@ describe('Provider', () => {
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
 
-    it('clears cache after props update', () => {
-      const tree = renderer
-        .create(
-          <LocalizationProvider
-            locale="a"
-            translations={{ a: { b: 'A' }, c: { b: 'C' } }}
-          >
-            <LocalizationConsumer>
-              {({ translate }) => (
-                <div>
-                  <span>{translate('b')}</span>
-                </div>
-              )}
-            </LocalizationConsumer>
-          </LocalizationProvider>
-        );
-
-        renderer.act(() => {
-          tree.update(
-            <LocalizationProvider
-              locale="c"
-              translations={{ a: { b: 'A' }, c: { b: 'C' } }}
-            >
-              <LocalizationConsumer>
-                {({ translate }) => (
-                  <div>
-                    <span>{translate('b')}</span>
-                  </div>
-                )}
-              </LocalizationConsumer>
-            </LocalizationProvider>
-          );
-        });
-
-        expect(tree.toJSON()).toMatchSnapshot();
-    });
-  });
-
-  it('calculate translation each time when disableCache is passed', () => {
-    const translations = { a: { b: 'translation' } };
-
-    const tree = renderer
-      .create(
+    it("clears cache after props update", () => {
+      const tree = renderer.create(
         <LocalizationProvider
-            disableCache
-            translations={translations}
-          >
-            <LocalizationConsumer>
-              {({ translate }) => (
-                <div>
-                  <span>{translate('a.b')}</span>
-                </div>
-              )}
-            </LocalizationConsumer>
-          </LocalizationProvider>
+          locale="a"
+          translations={{ a: { b: "A" }, c: { b: "C" } }}
+        >
+          <LocalizationConsumer>
+            {({ translate }) => (
+              <div>
+                <span>{translate("b")}</span>
+              </div>
+            )}
+          </LocalizationConsumer>
+        </LocalizationProvider>
       );
-
-      expect(tree.toJSON()).toMatchSnapshot();
-
-      translations.a.b = 'Changed Translation';
 
       renderer.act(() => {
         tree.update(
           <LocalizationProvider
-            disableCache
-            translations={translations}
+            locale="c"
+            translations={{ a: { b: "A" }, c: { b: "C" } }}
           >
             <LocalizationConsumer>
               {({ translate }) => (
                 <div>
-                  <span>{translate('a.b')}</span>
+                  <span>{translate("b")}</span>
                 </div>
               )}
             </LocalizationConsumer>
@@ -322,46 +246,50 @@ describe('Provider', () => {
       });
 
       expect(tree.toJSON()).toMatchSnapshot();
-  });
-
-  describe('LocalizationContext', () => {
-    it('can be used in classes', () => {
-      class Translation extends React.PureComponent {
-        render() {
-          return (
-            <span>
-              {this.context.translate('github')}
-            </span>
-          )
-        }
-      }
-
-      Translation.contextType = LocalizationContext;
-
-      const tree = renderer
-        .create(
-          <LocalizationProvider
-            locale="fr"
-            translations={TRANSLATIONS}
-          >
-            <Translation />
-          </LocalizationProvider>
-        )
-        .toJSON();
-
-        expect(tree).toMatchSnapshot();
     });
   });
 
-  describe('Default message', () => {
-    it('should render default message if no translation exists', () => {
+  it("calculate translation each time when disableCache is passed", () => {
+    const translations = { a: { b: "translation" } };
+
+    const tree = renderer.create(
+      <LocalizationProvider disableCache translations={translations}>
+        <LocalizationConsumer>
+          {({ translate }) => (
+            <div>
+              <span>{translate("a.b")}</span>
+            </div>
+          )}
+        </LocalizationConsumer>
+      </LocalizationProvider>
+    );
+
+    expect(tree.toJSON()).toMatchSnapshot();
+
+    translations.a.b = "Changed Translation";
+
+    renderer.act(() => {
+      tree.update(
+        <LocalizationProvider disableCache translations={translations}>
+          <LocalizationConsumer>
+            {({ translate }) => (
+              <div>
+                <span>{translate("a.b")}</span>
+              </div>
+            )}
+          </LocalizationConsumer>
+        </LocalizationProvider>
+      );
+    });
+
+    expect(tree.toJSON()).toMatchSnapshot();
+  });
+
+  describe("LocalizationContext", () => {
+    it("can be used in classes", () => {
       class Translation extends React.PureComponent {
         render() {
-          return (
-            <span>
-              {this.context.translate('not.existing', null, 'Default Message')}
-            </span>
-          )
+          return <span>{this.context.translate("github")}</span>;
         }
       }
 
@@ -369,16 +297,39 @@ describe('Provider', () => {
 
       const tree = renderer
         .create(
-          <LocalizationProvider
-            locale="fr"
-            translations={{ fr: {} }}
-          >
+          <LocalizationProvider locale="fr" translations={TRANSLATIONS}>
             <Translation />
           </LocalizationProvider>
         )
         .toJSON();
 
-        expect(tree).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe("Default message", () => {
+    it("should render default message if no translation exists", () => {
+      class Translation extends React.PureComponent {
+        render() {
+          return (
+            <span>
+              {this.context.translate("not.existing", null, "Default Message")}
+            </span>
+          );
+        }
+      }
+
+      Translation.contextType = LocalizationContext;
+
+      const tree = renderer
+        .create(
+          <LocalizationProvider locale="fr" translations={{ fr: {} }}>
+            <Translation />
+          </LocalizationProvider>
+        )
+        .toJSON();
+
+      expect(tree).toMatchSnapshot();
     });
   });
 });

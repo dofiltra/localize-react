@@ -1,7 +1,9 @@
 let TRANSLATION_CACHE = {};
 
-export const NO_TRANSLATION_WARNING_MESSAGE = '[LOCALIZE-REACT]: There are no translations for specified locale';
-export const NO_TEMPLATE_VALUE_MESSAGE = '[LOCALIZE-REACT] Looks like template is being used, but no value passed for ';
+export const NO_TRANSLATION_WARNING_MESSAGE =
+  "[LOCALIZE-REACT]: There are no translations for specified locale";
+export const NO_TEMPLATE_VALUE_MESSAGE =
+  "[LOCALIZE-REACT] Looks like template is being used, but no value passed for ";
 export const PARSE_TEMPLATE_REGEXP = /{{([^{]+[^}])}}/g;
 
 export function sanitizeLocale(locale, translations) {
@@ -9,17 +11,17 @@ export function sanitizeLocale(locale, translations) {
     return null;
   }
 
-  if (typeof translations[locale] === 'object') {
+  if (typeof translations[locale] === "object") {
     return locale;
   }
 
-  const normalizedLocale = locale.toLowerCase().replace(/-/g, '_');
-  if (typeof translations[normalizedLocale] === 'object') {
+  const normalizedLocale = locale.toLowerCase().replace(/-/g, "_");
+  if (typeof translations[normalizedLocale] === "object") {
     return normalizedLocale;
   }
 
-  const shortenLocale = normalizedLocale.split('_')[0];
-  if (typeof translations[shortenLocale] === 'object') {
+  const shortenLocale = normalizedLocale.split("_")[0];
+  if (typeof translations[shortenLocale] === "object") {
     return shortenLocale;
   }
 
@@ -28,15 +30,17 @@ export function sanitizeLocale(locale, translations) {
 }
 
 export function memoize(fn) {
-  return function memoizedFn(input, values, defaultMessage = '') {
-    const cacheKey = values ? JSON.stringify(values, null, '') + input + defaultMessage : input + defaultMessage;
+  return function memoizedFn(input, values, defaultMessage = "") {
+    const cacheKey = values
+      ? JSON.stringify(values, null, "") + input + defaultMessage
+      : input + defaultMessage;
     if (TRANSLATION_CACHE[cacheKey]) return TRANSLATION_CACHE[cacheKey];
 
     const output = fn(input, values, defaultMessage);
     TRANSLATION_CACHE[cacheKey] = output;
 
     return output;
-  }
+  };
 }
 
 export function clearCache() {
@@ -46,9 +50,11 @@ export function clearCache() {
 export function transformToPairs(templates, values) {
   const valuesKeys = Object.keys(values);
 
-  return templates.map(tpl => {
-    const correspondentKey = Array.prototype.slice.call(tpl, 2, -2).join('');
-    const rightKey = valuesKeys.find(valueKey => valueKey === correspondentKey);
+  return templates.map((tpl) => {
+    const correspondentKey = Array.prototype.slice.call(tpl, 2, -2).join("");
+    const rightKey = valuesKeys.find(
+      (valueKey) => valueKey === correspondentKey
+    );
 
     if (!rightKey) {
       console.warn(NO_TEMPLATE_VALUE_MESSAGE, tpl);
@@ -71,7 +77,7 @@ export function buildTranslation(str, values) {
   const templatePairs = transformToPairs(templates, values);
 
   return templatePairs.reduce((result, templatePair) => {
-    const replaceRegexp = new RegExp(templatePair[0], 'gi');
+    const replaceRegexp = new RegExp(templatePair[0], "gi");
 
     return result.replace(replaceRegexp, templatePair[1]);
   }, str);

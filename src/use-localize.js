@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { LocalizationContext } from './Provider';
+import { useContext } from "react";
+import { LocalizationContext } from "./Provider";
 
 export function useLocalize() {
   return useContext(LocalizationContext);

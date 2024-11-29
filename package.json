@@ -1,6 +1,6 @@
 {
-  "name": "localize-react",
-  "version": "1.7.1",
+  "name": "@dofiltra/localize-react",
+  "version": "1.7.3",
   "description": "React Localization Library",
   "main": "dist/localize-react.js",
   "repository": "git@github.com:yankouskia/localize-react.git",
@@ -32,7 +32,14 @@
     "build": "NODE_ENV=production rollup -c",
     "test": "jest",
     "coverage": "jest --coverage",
-    "codecov": "codecov -t 8365e97e-7298-4a00-ad32-740d44db89e5 -f coverage/*.json"
+    "codecov": "codecov -t 8365e97e-7298-4a00-ad32-740d44db89e5 -f coverage/*.json",
+    "pub": "yarn version --pre --patch && yarn run build && npm publish",
+    "format": "prettier --write \"src/**/*.js\"",
+    "prepublishOnly": "npm test",
+    "prepare": "npm run build",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
-  "types": "./index.d.ts"
+  "types": "./index.d.ts",
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

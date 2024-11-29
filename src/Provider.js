@@ -1,16 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   buildTranslation,
   clearCache,
   memoize,
   sanitizeLocale,
-} from './helpers';
+} from "./helpers";
 
 export const LocalizationContext = React.createContext();
 
-export function LocalizationProvider({ children, disableCache, locale, translations = {} }) {
+export function LocalizationProvider({
+  children,
+  disableCache,
+  locale,
+  translations = {},
+}) {
   const sanitizedLocale = sanitizeLocale(locale, translations);
-  const pureTranslations = sanitizedLocale ? translations[sanitizedLocale] : translations;
+  const pureTranslations = sanitizedLocale
+    ? translations[sanitizedLocale]
+    : translations;
 
   useEffect(() => {
     clearCache();
@@ -19,17 +26,21 @@ export function LocalizationProvider({ children, disableCache, locale, translati
   function pureTranslateFn(key, values, defaultMessage) {
     if (!pureTranslations || !key) return defaultMessage || key;
 
-    const fallbackTranslation = typeof defaultMessage === 'string' ? defaultMessage : key;
+    const fallbackTranslation =
+      typeof defaultMessage === "string"
+        ? defaultMessage || key?.split?.(":")?.[1]
+        : key;
     const possibleValue = pureTranslations[key];
 
-    if (typeof possibleValue === 'string') {
+    if (typeof possibleValue === "string") {
       if (!values) return possibleValue;
 
       return buildTranslation(possibleValue, values);
     }
 
-    const complexKeyArray = key.split('.');
-    if (complexKeyArray.length === 1) return buildTranslation(fallbackTranslation, values);
+    const complexKeyArray = key.split(".");
+    if (complexKeyArray.length === 1)
+      return buildTranslation(fallbackTranslation, values);
 
     let finalValue = pureTranslations[complexKeyArray[0]];
     for (let i = 1; i < complexKeyArray.length; i++) {
@@ -38,7 +49,9 @@ export function LocalizationProvider({ children, disableCache, locale, translati
       }
     }
 
-    return typeof finalValue === 'string' ? buildTranslation(finalValue, values) : buildTranslation(fallbackTranslation, values);
+    return typeof finalValue === "string"
+      ? buildTranslation(finalValue, values)
+      : buildTranslation(fallbackTranslation, values);
   }
 
   const translate = disableCache ? pureTranslateFn : memoize(pureTranslateFn);
