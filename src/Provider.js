@@ -28,8 +28,8 @@ export function LocalizationProvider({
 
     const fallbackTranslation =
       typeof defaultMessage === "string"
-        ? defaultMessage || key?.toString().split?.(":")?.[1] || key
-        : key;
+        ? defaultMessage
+        : key?.toString().split?.(":")?.[1] || key;
     const possibleValue = pureTranslations[key];
 
     if (typeof possibleValue === "string") {
